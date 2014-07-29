@@ -31,13 +31,14 @@ function Game(input) {
 };
 
 Game.prototype.playRound = function() {
-  var i = 0;
-  var j = 0;
   var numOfNeighbors = 0;
-  var newBoard = this.board.slice();
+  // var newBoard = this.board.slice();
+  var newBoard = JSON.parse(JSON.stringify(this.board));
+  var that = this;
   this.forEach(function(i, j) {
-    numOfNeighbors = this.countLiveNeighbors(i, j);
-    if(numOfNeighbors < 2) {
+    var numOfNeighbors = this.countLiveNeighbors(i, j);
+    console.log(i, j, this.board[i][j], numOfNeighbors);
+    if(this.board[i][j] === 1 && numOfNeighbors < 2) {
       newBoard[i][j] = 0;
     }
   }.bind(this));
@@ -46,8 +47,8 @@ Game.prototype.playRound = function() {
 };
 
 Game.prototype.forEach = function(callback) {
-  for(var i = 0; i < this.board[0].length; i++) {
-    for(var j = 0; j < this.board.length; j++) {
+  for(var i = 0; i < 3; i++) {
+    for(var j = 0; j < 3; j++) {
       callback(i, j);
     }
   }
@@ -59,14 +60,14 @@ Game.prototype.countLiveNeighbors = function(row, col) {
   var rowEnd = row + 1;
   var colStart = col - 1;
   var colEnd = col + 1;
-  for(var i = rowStart; i <= rowEnd ; i++) {
+  for(var i = rowStart; i <= rowEnd; i++) {
     for(var j = colStart; j <= colEnd; j++) {
       try {
-        if(this.board[i][j] === 1) {
+        if(!(i === row && j === col) && this.board[i][j] === 1) {
           count++;
         }
       } catch (e) {
-        console.log("Skip array out of bounds error: ", e);
+        // console.log("Skip array out of bounds error: ", e);
       }
     }
   }

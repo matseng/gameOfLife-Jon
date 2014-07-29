@@ -1,5 +1,6 @@
 // Karma configuration
 // Generated on Mon Jul 28 2014 20:23:44 GMT-0700 (PDT)
+// matseng: run tests with $ karma start karma.conf.js
 
 module.exports = function(config) {
   config.set({
